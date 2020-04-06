@@ -8,7 +8,8 @@ def dec(f):
     @functools.wraps(f)
     def wrapper(self):
         print 'Enter wrapper()'
-        print 'wrapper: self._a = {}'.format(self._a)
+        print 'wrapper(): self._a = {}'.format(self._a)
+        print 'wrapper(): self._d = {}'.format(self._d)
         f(self)
         # raise ValueError('fake error')
         print 'Exit wrapper()'
@@ -18,9 +19,10 @@ def dec(f):
 
 
 class A(object):
-    def __init__(self):
+    def __init__(self, d1):
         print '__init__ class A'
         self._a = 2
+        self._d = d1
 
     @dec
     def func(self):
@@ -30,11 +32,13 @@ class A(object):
 
 def main():
     print 'Enter main()'
-    a = A()
+    d = dict(one=1)
+    a = A(d)
 
     print 'main: a = {}'.format(a)
     print 'main: a.func = {}'.format(a.func)
 
+    print 'Calling a.func()'
     a.func()
     print 'Exit main()'
     
